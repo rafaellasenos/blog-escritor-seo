@@ -1,0 +1,149 @@
+squad:
+  code: blog-escritor-seo
+  setor: marketing
+  grupo: conteudo
+  sessao: blog
+  name: Blog Escritor SEO
+  description: Pesquisa, redige e publica artigos de blog otimizados para SEO, com template visual alinhado à identidade da marca.
+  icon: pencil
+  version: "2.0.0"
+
+  company: "_expxagents/_memory/company.md"
+  preferences: "_expxagents/_memory/preferences.md"
+  memory: "_memory/memories.md"
+
+  design_system: "squads/design-system/_memory/design-tokens.md"
+  brand_guidelines: "squads/design-system/_memory/brand-guidelines.md"
+  assets_path: "_expxagents/_assets/"
+
+  target_audience: defined in _expxagents/_memory/company.md
+  platform: defined in _expxagents/_memory/company.md
+  format: blog-post, blog-seo
+
+  schedule:
+    enabled: true
+
+  skills:
+    - web_search
+    - web_fetch
+
+  data: []
+
+  agents:
+    - id: validador
+      name: "Carlos Mendes"
+      icon: shield-check
+      avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Carlos"
+      prompt: agents/validador.md
+
+    - id: design-system-builder
+      name: "Beatriz Fontes"
+      icon: palette
+      avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Beatriz"
+      prompt: agents/design-system-builder.md
+
+    - id: pesquisadora
+      name: "Ana Beatriz"
+      icon: magnifying-glass
+      avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Ana"
+      prompt: agents/pesquisadora.md
+
+    - id: estrategista-seo
+      name: "Marcos Oliveira"
+      icon: bar-chart
+      avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Marcos"
+      prompt: agents/estrategista-seo.md
+
+    - id: curador-imagens
+      name: "Renata Vidal"
+      icon: image
+      avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Renata"
+      prompt: agents/curador-imagens.md
+
+    - id: ux-blog
+      name: "Isabela Nunes"
+      icon: layout
+      avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Isabela"
+      prompt: agents/ux-blog.md
+
+    - id: redatora
+      name: "Juliana Santos"
+      icon: pencil
+      avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Juliana"
+      prompt: agents/redatora.md
+
+    - id: revisora
+      name: "Fernanda Costa"
+      icon: check-circle
+      avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Fernanda"
+      prompt: agents/revisora.md
+
+    - id: publicador
+      name: "Diego Ferreira"
+      icon: send
+      avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Diego"
+      prompt: agents/publicador.md
+
+    - id: deployer
+      name: "Fernando Dias"
+      icon: rocket
+      avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Fernando"
+      prompt: agents/deployer.md
+      trigger: manual
+
+  pipeline:
+    steps:
+      - id: step-00
+        agent: validador
+        label: Validação do contexto da squad
+        execution: inline
+
+      - id: step-00b
+        agent: design-system-builder
+        label: Extração do design system da marca
+        deliverFrom: validador
+        conditional: design_system_incomplete
+        execution: inline
+
+      - id: step-01
+        agent: pesquisadora
+        label: Pesquisa de mercado e keywords
+        deliverFrom: validador
+        execution: inline
+
+      - id: step-02
+        agent: estrategista-seo
+        label: Definição de pauta e estratégia SEO
+        deliverFrom: pesquisadora
+        execution: inline
+
+      - id: step-03
+        agent: curador-imagens
+        label: Seleção de imagens para o artigo
+        deliverFrom: estrategista-seo
+        execution: inline
+
+      - id: step-03b
+        agent: ux-blog
+        label: Criação do template HTML/CSS do blog
+        deliverFrom: estrategista-seo
+        conditional: template_missing
+        execution: inline
+
+      - id: step-04
+        agent: redatora
+        label: Redação do artigo completo
+        deliverFrom: curador-imagens
+        execution: inline
+
+      - id: step-05
+        agent: revisora
+        label: Revisão editorial e SEO do artigo
+        deliverFrom: redatora
+        execution: inline
+
+      - id: step-06
+        agent: publicador
+        label: Pacote de publicação final
+        deliverFrom: revisora
+        execution: inline

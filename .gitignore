@@ -1,0 +1,4 @@
+output/
+state.json
+_config/
+*.log

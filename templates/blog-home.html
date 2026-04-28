@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — [Nome da Empresa]</title>
+  <meta name="description" content="[Descrição do blog da empresa — para SEO da homepage]">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #cc0000;
+      --color-accent:  #1a1a1a;
+      --color-dark:    #000000;
+      --color-light:   #ffffff;
+      --color-bg:      #f4f6f9;
+      --color-text:    #1a1a1a;
+      --color-muted:   #666666;
+      --color-border:  #e0e0e0;
+
+      --font-title: 'Impact', 'Arial Black', sans-serif;
+      --font-body:  'Open Sans', sans-serif;
+
+      --max-width: 1100px;
+      --radius: 10px;
+      --transition: 0.2s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ---- HEADER ---- */
+    .site-header {
+      background: var(--color-primary);
+      padding: 20px 24px;
+    }
+
+    .site-header__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img { height: 36px; width: auto; max-width: none; }
+
+    .header-tagline {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      font-weight: 400;
+    }
+
+    /* ---- HERO ---- */
+    .blog-hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: var(--color-accent);
+    }
+
+    .blog-hero__bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.35;
+    }
+
+    .blog-hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.65) 100%);
+    }
+
+    .blog-hero__content {
+      position: relative;
+      z-index: 1;
+      padding: 56px 24px 64px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .blog-hero__label {
+      display: inline-block;
+      background: var(--color-primary);
+      color: var(--color-light);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 4px 14px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    .blog-hero__title {
+      font-family: var(--font-title);
+      font-size: clamp(32px, 5vw, 56px);
+      color: var(--color-light);
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .blog-hero__title span { color: var(--color-primary); }
+
+    .blog-hero__subtitle {
+      font-size: 16px;
+      color: rgba(255,255,255,0.82);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ---- GRID DE ARTIGOS ---- */
+    .articles-section {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    .articles-section__header {
+      margin-bottom: 32px;
+    }
+
+    .articles-section__label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--color-accent);
+      margin-bottom: 6px;
+    }
+
+    .articles-section__title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--color-dark);
+    }
+
+    /* Card em destaque — primeiro artigo */
+    .card-featured {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: var(--color-light);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 32px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .card-featured:hover {
+      box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+      transform: translateY(-2px);
+    }
+
+    .card-featured__image {
+      background: var(--color-primary);
+      min-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-featured__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+    }
+
+    .card-featured__image-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-featured__body {
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .card-tag {
+      display: inline-block;
+      background: var(--color-accent);
+      color: var(--color-light);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 3px 10px;
+      border-radius: 3px;
+      margin-bottom: 14px;
+      width: fit-content;
+    }
+
+    .card-featured__title {
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--color-dark);
+      margin-bottom: 14px;
+    }
+
+    .card-featured__title:hover { color: var(--color-primary); }
+
+    .card-featured__excerpt {
+      font-size: 15px;
+      color: var(--color-muted);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--color-muted);
+    }
+
+    .card-meta__dot {
+      width: 3px;
+      height: 3px;
+      background: var(--color-border);
+      border-radius: 50%;
+    }
+
+    .card-readmore {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-top: 20px;
+      transition: gap var(--transition);
+    }
+
+    .card-readmore:hover { gap: 10px; }
+
+    /* Grid de cards normais */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--color-light);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      transition: box-shadow var(--transition), transform var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      box-shadow: 0 6px 22px rgba(0,0,0,0.11);
+      transform: translateY(-3px);
+    }
+
+    .card__image {
+      background: var(--color-primary);
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+    }
+
+    .card__body {
+      padding: 22px 22px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card__title {
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--color-dark);
+      margin-bottom: 10px;
+      flex: 1;
+    }
+
+    .card__title:hover { color: var(--color-primary); }
+
+    .card__excerpt {
+      font-size: 14px;
+      color: var(--color-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    /* ---- FOOTER ---- */
+    .site-footer {
+      background: var(--color-primary);
+      color: var(--color-light);
+      text-align: center;
+      padding: 56px 24px 32px;
+    }
+
+    .site-footer__title {
+      font-family: var(--font-title);
+      font-size: clamp(22px, 4vw, 38px);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      line-height: 1.15;
+    }
+
+    .site-footer__title span { color: var(--color-accent); }
+
+    .site-footer__sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.72);
+      max-width: 440px;
+      margin: 0 auto 28px;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--color-accent);
+      color: var(--color-light);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 13px 30px;
+      border-radius: var(--radius);
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .btn:hover {
+      background: #c44800;
+      transform: translateY(-1px);
+    }
+
+    .site-footer__copy {
+      margin-top: 40px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ---- RESPONSIVO ---- */
+    @media (max-width: 900px) {
+      .card-featured {
+        grid-template-columns: 1fr;
+      }
+      .card-featured__image { min-height: 200px; }
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 580px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      .card-featured__body { padding: 28px 22px; }
+      .blog-hero { padding: 40px 20px 48px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a href="blog-home.html" class="logo">
+        <img src="assets/logo/logo-branco.png" alt="[Nome da Empresa]" height="36">
+      </a>
+      <span class="header-tagline">Blog</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="blog-hero">
+    <!-- Imagem de fundo obrigatória — usar imagem do artigo em destaque ou imagem representativa do setor -->
+    <img class="blog-hero__bg" src="[URL-IMAGEM-HERO]" alt="[Alt text da imagem hero]">
+    <div class="blog-hero__overlay"></div>
+    <div class="blog-hero__content">
+      <div class="blog-hero__label">Blog oficial</div>
+      <h1 class="blog-hero__title">
+        Conteúdo que faz o seu <span>negócio crescer</span>
+      </h1>
+      <p class="blog-hero__subtitle">
+        Artigos práticos sobre gestão, tecnologia e resultado — escritos para quem opera na ponta.
+      </p>
+    </div>
+  </section>
+
+  <!-- ARTIGOS -->
+  <section class="articles-section">
+
+    <div class="articles-section__header">
+      <div class="articles-section__label">Publicações</div>
+      <div class="articles-section__title">Todos os artigos</div>
+    </div>
+
+    <!-- CARD DESTAQUE — artigo mais recente -->
+    <a href="blog-article.html" class="card-featured">
+      <div class="card-featured__image">
+        <!-- <img src="[URL-IMAGEM]" alt="[Alt text do artigo]"> -->
+      </div>
+      <div class="card-featured__body">
+        <span class="card-tag">Gestão</span>
+        <div class="card-featured__title">
+          Como reduzir perdas no açougue com controle de estoque
+        </div>
+        <p class="card-featured__excerpt">
+          A média de perdas em açougues no Brasil é de 2,92% — quase o dobro do varejo alimentar. Entenda como calcular, controlar e eliminar esse prejuízo do seu negócio.
+        </p>
+        <div class="card-meta">
+          <span>27 de abril de 2026</span>
+          <span class="card-meta__dot"></span>
+          <span>9 min de leitura</span>
+        </div>
+        <span class="card-readmore">Ler artigo →</span>
+      </div>
+    </a>
+
+    <!-- GRID DE ARTIGOS -->
+    <div class="cards-grid">
+
+      <a href="blog-article.html" class="card">
+        <div class="card__image">
+          <!-- <img src="[URL-IMAGEM]" alt="[Alt text]"> -->
+        </div>
+        <div class="card__body">
+          <span class="card-tag">Tecnologia</span>
+          <div class="card__title">
+            Açougue 4.0: o que é e como aplicar tecnologia no seu negócio
+          </div>
+          <p class="card__excerpt">
+            Entenda o que significa digitalizar a gestão do açougue e por onde começar sem complicação.
+          </p>
+          <div class="card-meta">
+            <span>19 abr 2026</span>
+            <span class="card-meta__dot"></span>
+            <span>8 min</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- [PRÓXIMO ARTIGO — duplicar este bloco] -->
+      <a href="blog-article.html" class="card">
+        <div class="card__image"></div>
+        <div class="card__body">
+          <span class="card-tag">[Categoria]</span>
+          <div class="card__title">[Título do artigo]</div>
+          <p class="card__excerpt">[Resumo curto do artigo — 1 a 2 frases]</p>
+          <div class="card-meta">
+            <span>[Data]</span>
+            <span class="card-meta__dot"></span>
+            <span>[X min]</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- [PRÓXIMO ARTIGO — duplicar este bloco] -->
+      <a href="blog-article.html" class="card">
+        <div class="card__image"></div>
+        <div class="card__body">
+          <span class="card-tag">[Categoria]</span>
+          <div class="card__title">[Título do artigo]</div>
+          <p class="card__excerpt">[Resumo curto do artigo — 1 a 2 frases]</p>
+          <div class="card-meta">
+            <span>[Data]</span>
+            <span class="card-meta__dot"></span>
+            <span>[X min]</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer__title">
+      Seu negócio merece <span>mais controle</span>
+    </div>
+    <p class="site-footer__sub">
+      Conheça o sistema de gestão usado por mais de 300 empresas em todo o Brasil.
+    </p>
+    <a href="#" class="btn">Teste grátis — sem cartão</a>
+    <div class="site-footer__copy">
+      © 2026 [Nome da Empresa] — Todos os direitos reservados
+    </div>
+  </footer>
+
+</body>
+</html>
